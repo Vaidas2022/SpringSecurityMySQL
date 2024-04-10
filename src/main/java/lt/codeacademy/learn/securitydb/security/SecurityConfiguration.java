@@ -8,30 +8,34 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import static lt.codeacademy.learn.securitydb.utils.Roles.*;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 	
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http
-		.authorizeRequests()
-//		.antMatchers("/admin/**").hasRole(ADMIN)
-//		.antMatchers("/user/**").hasAnyRole(USER,ADMIN)
-		.antMatchers(HttpMethod.POST,"/registration").permitAll()
-		.antMatchers("/error").permitAll()
-		.antMatchers("/**").permitAll().anyRequest().anonymous()
-		.and()
-		.formLogin();
-		
-		return http.build();
-	}
+	 @Bean
+	 SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	        http
+	            .authorizeRequests(requests -> requests
+	                .antMatchers("/admin/**").hasRole("ADMIN") // Assuming "ADMIN" is a constant or replaced with the actual role name
+	                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") // Assuming "USER" and "ADMIN" are constants or replaced with the actual role names
+	                .antMatchers(HttpMethod.POST, "/registration").permitAll()
+	                .antMatchers("/error").permitAll()
+	                .antMatchers("/**").permitAll()
+	                .anyRequest().authenticated()) // Changed from .anonymous() to .authenticated() for typical use cases
+	            .formLogin( form -> form
+	        			.loginPage("/login")
+	        			.permitAll()
+	        		  );
+
+	        return http.build();
+	 }
 	
+
+
 	@Bean 
-    public PasswordEncoder passwordEncoder() { 
+    PasswordEncoder passwordEncoder() { 
         return new BCryptPasswordEncoder(); 
     }
 }

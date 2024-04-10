@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import lt.codeacademy.learn.securitydb.controllers.MainController;
 import lt.codeacademy.learn.securitydb.entities.MyUser;
 import lt.codeacademy.learn.securitydb.exceptions.UserAlreadyExistException;
 import lt.codeacademy.learn.securitydb.repositories.UserRepository;

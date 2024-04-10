@@ -1,21 +1,16 @@
 package lt.codeacademy.learn.securitydb.controllers;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
-import lt.codeacademy.learn.securitydb.MyRunner;
 import lt.codeacademy.learn.securitydb.entities.MyUser;
 import lt.codeacademy.learn.securitydb.exceptions.UserAlreadyExistException;
 import lt.codeacademy.learn.securitydb.services.MyUserDetailsService;
@@ -40,6 +35,11 @@ public class MainController {
 	public String adminUsers(Model model) {
 		model.addAttribute("users",uService.loadAllUsers() ); 		
 		return "/admin/users";
+	}
+	
+	@GetMapping("/login")
+	public String showLoginForm() {
+		return "login";
 	}
 	
 	@GetMapping("/registration")
