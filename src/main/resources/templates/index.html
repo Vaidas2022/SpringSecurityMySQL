@@ -6,5 +6,10 @@
 </head>
 <body>
 <h2>Hello. This is the index page</h2>
+<form th:action="@{/logout}" method="post">
+  <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+  <button type="submit">Log Out</button>
+</form>
+
 </body>
 </html>

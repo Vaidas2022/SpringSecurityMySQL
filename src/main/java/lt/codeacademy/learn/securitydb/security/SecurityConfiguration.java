@@ -24,10 +24,16 @@ public class SecurityConfiguration {
 	                .antMatchers("/error").permitAll()
 	                .antMatchers("/**").permitAll()
 	                .anyRequest().authenticated()) // Changed from .anonymous() to .authenticated() for typical use cases
-	            .formLogin( form -> form
-	        			.loginPage("/login")
-	        			.permitAll()
-	        		  );
+	            .formLogin(form -> form
+	                .loginPage("/login")
+	                .permitAll())
+	            .logout(logout -> logout
+	                .logoutUrl("/logout") // Nurodo, kuris URL bus naudojamas atsijungimui.
+	                .logoutSuccessUrl("/login?logout") // Nukreipia vartotoją į login puslapį su pranešimu apie sėkmingą atsijungimą.
+	                .invalidateHttpSession(true) // Invaliduoja HTTP sesiją po atsijungimo.
+	                .deleteCookies("JSESSIONID") // Ištrina cookies, pavyzdžiui, sesijos cookie.
+	                .permitAll());
+;
 
 	        return http.build();
 	 }
